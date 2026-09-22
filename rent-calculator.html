@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Calculator - INR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            width: auto;
+            margin-top: 0;
+        }
+        
+        .btn-delete:hover {
+            background: #ff5252;
+        }
+        
+        .item-list {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .item-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .item-details {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-state p {
+            font-size: 1.1em;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-top: 15px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        
+        .result-label {
+            opacity: 0.9;
+        }
+        
+        .result-value {
+            font-weight: 600;
+        }
+        
+        .currency-symbol {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 3px solid #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table-total-row {
+            background: #f0f4ff;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .table-total-row td {
+            padding: 15px;
+            border-top: 2px solid #667eea;
+        }
+        
+        .btn-remove {
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-remove:hover {
+            background: #ff5252;
+        }
+        
+        .empty-bill {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1em;
+        }
+        
+        .bill-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .btn-reset {
+            background: #999;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-reset:hover {
+            background: #777;
+        }
+        
+        .btn-print {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-print:hover {
+            background: #45a049;
+        }
+        
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 20px;
+            }
+            
+            .header {
+                display: none !important;
+            }
+            
+            .content {
+                display: none !important;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                page-break-inside: avoid;
+            }
+            
+            .card h2 {
+                display: none;
+            }
+            
+            .bill-header {
+                display: block !important;
+                margin-bottom: 20px;
+            }
+            
+            table {
+                font-size: 12px;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            
+            table th {
+                background: #333 !important;
+                color: white !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                border: 1px solid #333;
+            }
+            
+            table td {
+                padding: 8px;
+                border: 1px solid #ddd;
+            }
+            
+            table th:last-child {
+                display: none;
+            }
+            
+            table td:last-child {
+                display: none;
+            }
+            
+            .result-section {
+                background: white !important;
+                border: 1px solid #ddd;
+                margin-top: 20px;
+            }
+            
+            .result-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 12px;
+                border: none;
+            }
+            
+            .bill-actions {
+                display: none !important;
+            }
+            
+            .footer {
+                display: none !important;
+            }
+        }
+        
+        .config-section {
+            opacity: 0.5;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .config-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Rent Calculator</h1>
+            <p>Manage rental items and calculate damages with ease</p>
+        </div>
+        
+        <div class="content">
+            <!-- Configure Items Section -->
+            <div class="card">
+                <h2>⚙️ Configure Items</h2>
+                
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" placeholder="e.g. Glass, Chair, Projector">
+                    <div class="error" id="nameError"></div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="rentPerDay">Rent per Day (₹)</label>
+                        <input type="number" id="rentPerDay" placeholder="5" min="0" step="0.01">
+                        <div class="error" id="rentError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="damageCost">Damage Cost (₹)</label>
+                        <input type="number" id="damageCost" placeholder="20" min="0" step="0.01">
+                        <div class="error" id="damageError"></div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="addItem()">+ Add Item</button>
+                
+                <div class="item-list" id="itemsList"></div>
+            </div>
+            
+            <!-- Calculate Rent Section -->
+            <div class="card">
+                <h2>📋 Calculate Rent</h2>
+                
+                <div class="form-group">
+                    <label for="selectedItem">Select Item</label>
+                    <select id="selectedItem" onchange="updateSelection()">
+                        <option value="">-- Choose an item --</option>
+                    </select>
+                    <div class="error" id="selectError"></div>
+                    <div id="itemRatesDisplay" style="margin-top: 12px; padding: 12px; background: #f0f4ff; border-radius: 6px; border-left: 4px solid #667eea; display: none;">
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">
+                            <span style="font-weight: 500;">Rent Rate:</span> <span id="displayRentRate" style="color: #667eea; font-weight: 600;">₹0.00</span>/day | 
+                            <span style="font-weight: 500;">Damage Rate:</span> <span id="displayDamageRate" style="color: #667eea; font-weight: 600;">₹0.00</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="quantityTaken">Quantity Taken</label>
+                        <input type="number" id="quantityTaken" placeholder="0" min="0" step="1" oninput="updateSelection()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantityLost">Lost/Damaged</label>
+                        <input type="number" id="quantityLost" placeholder="0" min="0" step="1" oninput="updateSelection()">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="addToCart()" style="margin-top: 10px;">+ Add to Bill</button>
+                
+                <div id="resultSection"></div>
+            </div>
+        </div>
+        
+        <!-- Selected Items Table Section -->
+        <div class="card">
+            <h2>📊 Bill Summary</h2>
+            <div id="tableSection"></div>
+        </div>
+        
+        <div class="footer">
+            <p>✨ Manage your rentals efficiently | All amounts in Indian Rupees (₹)</p>
+        </div>
+    </div>
+    
+    <script>
+        let items = [
+            { id: 1, name: 'Dish for Salt', rentPerDay: 20, damageCost: 60 },
+            { id: 2, name: 'Jugs', rentPerDay: 35, damageCost: 120 },
+            { id: 3, name: 'Mile Markers', rentPerDay: 300, damageCost: 5000 },
+            { id: 4, name: 'Plastic Buckets', rentPerDay: 30, damageCost: 100 },
+            { id: 5, name: 'Plastic cups', rentPerDay: 4, damageCost: 20 },
+            { id: 6, name: 'Traffic Battons', rentPerDay: 100, damageCost: 472 },
+            { id: 7, name: 'Traffic Cones', rentPerDay: 50, damageCost: 300 },
+            { id: 8, name: 'Traffic Cones (Large)', rentPerDay: 50, damageCost: 500 },
+            { id: 9, name: 'Traffic Jackets', rentPerDay: 35, damageCost: 95 },
+            { id: 10, name: 'Trays', rentPerDay: 30, damageCost: 160 },
+            { id: 11, name: 'Water Dispensers', rentPerDay: 30, damageCost: 150 }
+        ];
+        let nextId = 12;
+        let cart = [];
+        let cartNextId = 1;
+        
+        // Clear errors
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+        }
+        
+        // Render items list
+        function renderItems() {
+            const list = document.getElementById('itemsList');
+            const select = document.getElementById('selectedItem');
+            
+            list.innerHTML = '';
+            select.innerHTML = '<option value="">-- Choose an item --</option>';
+            
+            if (items.length === 0) {
+                list.innerHTML = '<div class="empty-state"><p>No items configured yet</p></div>';
+                return;
+            }
+            
+            items.forEach(item => {
+                // Add to list
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-card';
+                itemDiv.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-details">
+                            Rent: ₹${parseFloat(item.rentPerDay).toFixed(2)}/day | Damage: ₹${parseFloat(item.damageCost).toFixed(2)}
+                        </div>
+                    </div>
+                    <button class="btn btn-delete" onclick="deleteItem(${item.id})">Delete</button>
+                `;
+                list.appendChild(itemDiv);
+                
+                // Add to dropdown
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.name;
+                select.appendChild(option);
+            });
+        }
+        
+        // Add item
+        function addItem() {
+            clearErrors();
+            
+            const name = document.getElementById('itemName').value.trim();
+            const rent = parseFloat(document.getElementById('rentPerDay').value);
+            const damage = parseFloat(document.getElementById('damageCost').value);
+            
+            let hasError = false;
+            
+            if (!name) {
+                document.getElementById('nameError').textContent = 'Please enter an item name';
+                document.getElementById('nameError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (isNaN(rent) || rent < 0) {
+                document.getElementById('rentError').textContent = 'Please enter a valid rent amount';
+                document.getElementById('rentError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (isNaN(damage) || damage < 0) {
+                document.getElementById('damageError').textContent = 'Please enter a valid damage cost';
+                document.getElementById('damageError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            items.push({
+                id: nextId++,
+                name,
+                rentPerDay: rent,
+                damageCost: damage
+            });
+            
+            document.getElementById('itemName').value = '';
+            document.getElementById('rentPerDay').value = '';
+            document.getElementById('damageCost').value = '';
+            
+            renderItems();
+        }
+        
+        // Delete item
+        function deleteItem(id) {
+            items = items.filter(item => item.id !== id);
+            const select = document.getElementById('selectedItem');
+            if (select.value == id) {
+                select.value = '';
+            }
+            renderItems();
+            updateSelection();
+        }
+        
+        // Update selection
+        function updateSelection() {
+            clearErrors();
+            
+            const itemId = parseInt(document.getElementById('selectedItem').value);
+            const quantityTaken = parseInt(document.getElementById('quantityTaken').value) || 0;
+            const quantityLost = parseInt(document.getElementById('quantityLost').value) || 0;
+            
+            const ratesDisplay = document.getElementById('itemRatesDisplay');
+            
+            if (!itemId) {
+                ratesDisplay.style.display = 'none';
+                return;
+            }
+            
+            const item = items.find(i => i.id === itemId);
+            if (item) {
+                document.getElementById('displayRentRate').textContent = '₹' + parseFloat(item.rentPerDay).toFixed(2);
+                document.getElementById('displayDamageRate').textContent = '₹' + parseFloat(item.damageCost).toFixed(2);
+                ratesDisplay.style.display = 'block';
+            }
+            
+            if (quantityLost < 0 || quantityLost > quantityTaken) {
+                document.getElementById('selectError').textContent = 'Lost quantity cannot exceed taken quantity';
+                document.getElementById('selectError').classList.add('show');
+                return;
+            }
+        }
+        
+        // Add to cart
+        function addToCart() {
+            clearErrors();
+            
+            const itemId = parseInt(document.getElementById('selectedItem').value);
+            const quantityTaken = parseInt(document.getElementById('quantityTaken').value) || 0;
+            const quantityLost = parseInt(document.getElementById('quantityLost').value) || 0;
+            
+            if (!itemId) {
+                document.getElementById('selectError').textContent = 'Please select an item';
+                document.getElementById('selectError').classList.add('show');
+                return;
+            }
+            
+            if (quantityTaken <= 0) {
+                document.getElementById('selectError').textContent = 'Quantity taken must be greater than 0';
+                document.getElementById('selectError').classList.add('show');
+                return;
+            }
+            
+            if (quantityLost < 0 || quantityLost > quantityTaken) {
+                document.getElementById('selectError').textContent = 'Lost quantity cannot exceed taken quantity';
+                document.getElementById('selectError').classList.add('show');
+                return;
+            }
+            
+            const item = items.find(i => i.id === itemId);
+            if (!item) return;
+            
+            const quantityReturned = quantityTaken - quantityLost;
+            const rentCost = quantityReturned * item.rentPerDay;
+            const damageCost = quantityLost * item.damageCost;
+            const total = rentCost + damageCost;
+            
+            cart.push({
+                cartId: cartNextId++,
+                itemId: itemId,
+                itemName: item.name,
+                quantityTaken: quantityTaken,
+                quantityLost: quantityLost,
+                quantityReturned: quantityReturned,
+                rentPerDay: item.rentPerDay,
+                damageCost: item.damageCost,
+                rentCost: rentCost,
+                damageCostTotal: damageCost,
+                total: total
+            });
+            
+            // Clear form
+            document.getElementById('selectedItem').value = '';
+            document.getElementById('quantityTaken').value = '';
+            document.getElementById('quantityLost').value = '';
+            
+            renderTable();
+        }
+        
+        // Remove from cart
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            renderTable();
+        }
+        
+        // Render table
+        function renderTable() {
+            const tableSection = document.getElementById('tableSection');
+            
+            if (cart.length === 0) {
+                tableSection.innerHTML = '<div class="empty-bill"><p>No items added to bill yet. Select items and click "Add to Bill"</p></div>';
+                return;
+            }
+            
+            const billDate = new Date().toLocaleDateString('en-IN');
+            const billTime = new Date().toLocaleTimeString('en-IN');
+            const billNumber = 'BILL-' + Date.now();
+            
+            let html = `
+                <div style="margin-bottom: 20px; text-align: center; display: none;" class="bill-header">
+                    <h3 style="margin: 0; color: #333;">RENTAL BILL</h3>
+                    <p style="margin: 5px 0; color: #666; font-size: 12px;">Bill No: ${billNumber}</p>
+                    <p style="margin: 5px 0; color: #666; font-size: 12px;">Date: ${billDate} | Time: ${billTime}</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Qty Taken</th>
+                            <th>Qty Lost</th>
+                            <th>Rent Rate (₹)</th>
+                            <th>Damage Rate (₹)</th>
+                            <th>Rent Cost (₹)</th>
+                            <th>Damage Cost (₹)</th>
+                            <th>Total (₹)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            let grandTotal = 0;
+            
+            cart.forEach(cartItem => {
+                html += `
+                    <tr>
+                        <td>${cartItem.itemName}</td>
+                        <td>${cartItem.quantityTaken}</td>
+                        <td>${cartItem.quantityLost}</td>
+                        <td>${cartItem.rentPerDay.toFixed(2)}</td>
+                        <td>${cartItem.damageCost.toFixed(2)}</td>
+                        <td>${cartItem.rentCost.toFixed(2)}</td>
+                        <td>${cartItem.damageCostTotal.toFixed(2)}</td>
+                        <td>${cartItem.total.toFixed(2)}</td>
+                        <td><button class="btn-remove" onclick="removeFromCart(${cartItem.cartId})">Remove</button></td>
+                    </tr>
+                `;
+                grandTotal += cartItem.total;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+                <div class="result-section">
+                    <div class="result-row">
+                        <span class="result-label">Grand Total</span>
+                        <span class="result-value"><span class="currency-symbol">₹</span>${grandTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+                <div class="bill-actions">
+                    <button class="btn btn-reset" onclick="resetBill()">Clear Bill</button>
+                    <button class="btn btn-print" onclick="printBill()">Print Bill</button>
+                </div>
+            `;
+            
+            tableSection.innerHTML = html;
+        }
+        
+        // Reset bill
+        function resetBill() {
+            if (confirm('Are you sure you want to clear the entire bill?')) {
+                cart = [];
+                cartNextId = 1;
+                renderTable();
+            }
+        }
+        
+        // Print bill
+        function printBill() {
+            if (cart.length === 0) {
+                alert('Please add items to bill before printing');
+                return;
+            }
+            window.print();
+        }
+        
+        // Initialize
+        renderItems();
+        renderTable();
+    </script>
+</body>
+</html>

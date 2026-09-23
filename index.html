@@ -87,6 +87,18 @@
             font-size: 1em;
             transition: all 0.3s ease;
             font-family: inherit;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+        
+        select {
+            cursor: pointer;
         }
         
         input:focus, select:focus {
@@ -509,6 +521,11 @@
                 <h2>📋 Calculate Rent</h2>
                 
                 <div class="form-group">
+                    <label for="billTo">Bill To (Customer Name)</label>
+                    <input type="text" id="billTo" placeholder="Enter customer name">
+                </div>
+                
+                <div class="form-group">
                     <label for="selectedItem">Select Item</label>
                     <select id="selectedItem" onchange="updateSelection()">
                         <option value="">-- Choose an item --</option>
@@ -771,12 +788,14 @@
             const billDate = new Date().toLocaleDateString('en-IN');
             const billTime = new Date().toLocaleTimeString('en-IN');
             const billNumber = 'BILL-' + Date.now();
+            const billTo = document.getElementById('billTo').value.trim() || 'Customer';
             
             let html = `
-                <div style="margin-bottom: 20px; text-align: center; display: none;" class="bill-header">
-                    <h3 style="margin: 0; color: #333;">RENTAL BILL</h3>
-                    <p style="margin: 5px 0; color: #666; font-size: 12px;">Bill No: ${billNumber}</p>
-                    <p style="margin: 5px 0; color: #666; font-size: 12px;">Date: ${billDate} | Time: ${billTime}</p>
+                <div style="margin-bottom: 25px; border-bottom: 2px solid #667eea; padding-bottom: 15px;">
+                    <h3 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">RENTAL BILL</h3>
+                    <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Bill To:</strong> ${billTo}</p>
+                    <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Bill No:</strong> ${billNumber}</p>
+                    <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Date:</strong> ${billDate} | <strong>Time:</strong> ${billTime}</p>
                 </div>
                 <table>
                     <thead>

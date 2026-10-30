@@ -1021,7 +1021,13 @@
                     }
                 } catch (e) {
                     console.error('Error loading items:', e);
+                    items = JSON.parse(JSON.stringify(DEFAULT_ITEMS)); // Use defaults on error
                 }
+            } else {
+                // First time - use defaults and save them
+                items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+                nextId = 12;
+                saveItemsToStorage(); // Save defaults for future use
             }
         }
         
@@ -1164,7 +1170,8 @@
             }
         });
         
-        let items = [
+        // Default items - will be used only if localStorage is empty
+        const DEFAULT_ITEMS = [
             { id: 1, name: 'Dish for Salt', rentPerDay: 20, damageCost: 60 },
             { id: 2, name: 'Jugs', rentPerDay: 35, damageCost: 120 },
             { id: 3, name: 'Mile Markers', rentPerDay: 300, damageCost: 5000 },
@@ -1177,6 +1184,8 @@
             { id: 10, name: 'Trays', rentPerDay: 30, damageCost: 160 },
             { id: 11, name: 'Water Dispensers', rentPerDay: 30, damageCost: 150 }
         ];
+        
+        let items = [];
         let nextId = 12;
         let cart = [];
         let cartNextId = 1;
@@ -1215,7 +1224,6 @@
                     </div>
                     <div style="display: flex; gap: 5px;">
                         <button class="btn btn-edit" onclick="openEditModal(${item.id})">Edit</button>
-                        <button class="btn btn-delete" onclick="deleteItem(${item.id})">Delete</button>
                     </div>
                 `;
                 list.appendChild(itemDiv);

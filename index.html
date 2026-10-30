@@ -1007,57 +1007,43 @@
         
         // LocalStorage Management - For Permanent Data Storage
         function saveItemsToStorage() {
-            localStorage.setItem('rentCalcItems', JSON.stringify(items));
+            // Disabled - items always reset to defaults on reload
+            // localStorage.setItem('rentCalcItems', JSON.stringify(items));
         }
         
         function loadItemsFromStorage() {
-            const savedItems = localStorage.getItem('rentCalcItems');
-            if (savedItems) {
-                try {
-                    items = JSON.parse(savedItems);
-                    // Find the highest ID to set nextId correctly
-                    if (items.length > 0) {
-                        nextId = Math.max(...items.map(i => i.id)) + 1;
-                    }
-                } catch (e) {
-                    console.error('Error loading items:', e);
-                    items = JSON.parse(JSON.stringify(DEFAULT_ITEMS)); // Use defaults on error
-                }
-            } else {
-                // First time - use defaults and save them
-                items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
-                nextId = 12;
-                saveItemsToStorage(); // Save defaults for future use
-            }
+            // Always load defaults - fresh start every time!
+            items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+            nextId = 12;
         }
         
         function saveCartToStorage() {
-            localStorage.setItem('rentCalcCart', JSON.stringify(cart));
-            localStorage.setItem('rentCalcCartNextId', cartNextId);
+            // Disabled - cart resets on reload
+            // localStorage.setItem('rentCalcCart', JSON.stringify(cart));
+            // localStorage.setItem('rentCalcCartNextId', cartNextId);
         }
         
         function loadCartFromStorage() {
-            const savedCart = localStorage.getItem('rentCalcCart');
-            const savedCartNextId = localStorage.getItem('rentCalcCartNextId');
-            if (savedCart) {
-                try {
-                    cart = JSON.parse(savedCart);
-                    if (savedCartNextId) {
-                        cartNextId = parseInt(savedCartNextId);
-                    }
-                } catch (e) {
-                    console.error('Error loading cart:', e);
-                }
-            }
+            // Disabled - cart always starts fresh
+            // const savedCart = localStorage.getItem('rentCalcCart');
+            // const savedCartNextId = localStorage.getItem('rentCalcCartNextId');
+            // if (savedCart) {
+            //     try {
+            //         cart = JSON.parse(savedCart);
+            //         if (savedCartNextId) {
+            //             cartNextId = parseInt(savedCartNextId);
+            //         }
+            //     } catch (e) {
+            //         console.error('Error loading cart:', e);
+            //     }
+            // }
+            cart = [];
+            cartNextId = 1;
         }
         
         function clearAllStorage() {
-            if (confirm('Are you sure you want to clear ALL data? This cannot be undone!')) {
-                localStorage.removeItem('rentCalcItems');
-                localStorage.removeItem('rentCalcCart');
-                localStorage.removeItem('rentCalcCartNextId');
-                location.reload();
-            }
+            // All data resets automatically on page reload
+            alert('All data will reset to defaults on page reload. No need to manually clear!');
         }
         
         function exportConfiguration() {

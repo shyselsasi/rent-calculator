@@ -152,7 +152,50 @@
         
         .item-list {
             margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .item-list.hidden {
             display: none;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            flex: 1;
+        }
+        
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+        
+        .toggle-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .toggle-btn.hidden {
+            background: #999;
         }
         
         .item-card {
@@ -371,6 +414,331 @@
             background: #45a049;
         }
         
+        /* Password Login Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .login-overlay.hidden {
+            display: none !important;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .login-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .login-box p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+        
+        .login-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .login-error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .login-error.show {
+            display: block;
+        }
+        
+        .login-lock-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        /* User Status Bar */
+        .user-status-bar {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .user-icon {
+            font-size: 20px;
+        }
+        
+        /* Edit Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .modal-content .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .modal-content input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .modal-content label {
+            color: #555;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-save-edit {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-save-edit:hover {
+            background: #5568d3;
+        }
+        
+        .btn-cancel-edit {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-cancel-edit:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-edit {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            width: auto;
+            margin-top: 0;
+            margin-right: 5px;
+        }
+        
+        .btn-edit:hover {
+            background: #5568d3;
+        }
+        
+        .btn-signout {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-signout:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+        
+        .btn-clear-data {
+            background: #ff9800;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-clear-data:hover {
+            background: #f57c00;
+        }
+        
+        .status-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .export-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .export-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .export-content h2 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .export-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .export-textarea {
+            width: 100%;
+            height: 300px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+        
+        .export-steps {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .export-steps ol {
+            font-size: 13px;
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .export-steps li {
+            margin-bottom: 8px;
+        }
+        
         @media print {
             @page {
                 margin: 0;
@@ -459,6 +827,18 @@
             .footer {
                 display: none !important;
             }
+            
+            .user-status-bar {
+                display: none !important;
+            }
+            
+            .modal-overlay {
+                display: none !important;
+            }
+            
+            .btn-edit {
+                display: none !important;
+            }
         }
         
         .config-section {
@@ -480,7 +860,57 @@
     </style>
 </head>
 <body>
+    <!-- Edit Item Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <h2>Edit Item</h2>
+            
+            <div class="form-group">
+                <label for="editItemName">Item Name</label>
+                <input type="text" id="editItemName" placeholder="Item name">
+            </div>
+            
+            <div class="form-group">
+                <label for="editRentPerDay">Rent per Day (₹)</label>
+                <input type="number" id="editRentPerDay" placeholder="0" min="0" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="editDamageCost">Damage Cost (₹)</label>
+                <input type="number" id="editDamageCost" placeholder="0" min="0" step="0.01">
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn-save-edit" onclick="saveEditItem()">Save Changes</button>
+                <button class="btn-cancel-edit" onclick="closeEditModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Password Protection Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-lock-icon">🔒</div>
+            <h1>Rent Calculator</h1>
+            <p>Enter Password to Access</p>
+            <div class="login-error" id="loginError">Invalid Password</div>
+            <input type="password" id="passwordInput" placeholder="Enter Password" onkeypress="if(event.key==='Enter') checkPassword()">
+            <button class="login-btn" onclick="checkPassword()">Access</button>
+        </div>
+    </div>
+
     <div class="container">
+        <!-- User Status Bar -->
+        <div class="user-status-bar" id="userStatusBar" style="display: none;">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span>Logged in | Session Active</span>
+            </div>
+            <div class="status-buttons">
+                <button class="btn-signout" onclick="signOut()">Sign Out</button>
+            </div>
+        </div>
+        
         <div class="header">
             <h1>💰 Rent Calculator</h1>
             <p>Manage rental items and calculate damages with ease</p>
@@ -489,7 +919,10 @@
         <div class="content">
             <!-- Configure Items Section -->
             <div class="card">
-                <h2>⚙️ Configure Items</h2>
+                <div class="section-header">
+                    <h2>⚙️ Configure Items</h2>
+                    <button class="toggle-btn" id="toggleItemsBtn" onclick="toggleItemsList()">👁️ Show Items</button>
+                </div>
                 
                 <div class="form-group">
                     <label for="itemName">Item Name</label>
@@ -513,7 +946,7 @@
                 
                 <button class="btn btn-primary" onclick="addItem()">+ Add Item</button>
                 
-                <div class="item-list" id="itemsList"></div>
+                <div class="item-list hidden" id="itemsList"></div>
             </div>
             
             <!-- Calculate Rent Section -->
@@ -569,6 +1002,168 @@
     </div>
     
     <script>
+        // Password Protection
+        const APP_PASSWORD = '1234'; // Change this to your desired password
+        
+        // LocalStorage Management - For Permanent Data Storage
+        function saveItemsToStorage() {
+            localStorage.setItem('rentCalcItems', JSON.stringify(items));
+        }
+        
+        function loadItemsFromStorage() {
+            const savedItems = localStorage.getItem('rentCalcItems');
+            if (savedItems) {
+                try {
+                    items = JSON.parse(savedItems);
+                    // Find the highest ID to set nextId correctly
+                    if (items.length > 0) {
+                        nextId = Math.max(...items.map(i => i.id)) + 1;
+                    }
+                } catch (e) {
+                    console.error('Error loading items:', e);
+                }
+            }
+        }
+        
+        function saveCartToStorage() {
+            localStorage.setItem('rentCalcCart', JSON.stringify(cart));
+            localStorage.setItem('rentCalcCartNextId', cartNextId);
+        }
+        
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('rentCalcCart');
+            const savedCartNextId = localStorage.getItem('rentCalcCartNextId');
+            if (savedCart) {
+                try {
+                    cart = JSON.parse(savedCart);
+                    if (savedCartNextId) {
+                        cartNextId = parseInt(savedCartNextId);
+                    }
+                } catch (e) {
+                    console.error('Error loading cart:', e);
+                }
+            }
+        }
+        
+        function clearAllStorage() {
+            if (confirm('Are you sure you want to clear ALL data? This cannot be undone!')) {
+                localStorage.removeItem('rentCalcItems');
+                localStorage.removeItem('rentCalcCart');
+                localStorage.removeItem('rentCalcCartNextId');
+                location.reload();
+            }
+        }
+        
+        function exportConfiguration() {
+            // Generate code to update the default items array
+            const itemsCode = JSON.stringify(items, null, 12);
+            
+            const code = `
+        let items = ${itemsCode};
+        let nextId = ${nextId};`;
+            
+            // Create a modal to show the code
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 2000;';
+            
+            const content = document.createElement('div');
+            content.style.cssText = 'background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;';
+            
+            content.innerHTML = `
+                <h2 style="margin-top: 0;">Export Configuration for All Users</h2>
+                <p style="color: #666; font-size: 14px;">Copy this code and replace the items array in your HTML file to make these changes permanent for ALL users:</p>
+                <textarea readonly style="width: 100%; height: 300px; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-family: monospace; font-size: 12px; line-height: 1.5;">${code}</textarea>
+                <p style="color: #ff6b6b; font-size: 13px; margin-top: 15px;"><strong>How to Update:</strong></p>
+                <ol style="font-size: 13px; color: #666;">
+                    <li>Copy the code above (select all and Ctrl+C)</li>
+                    <li>Open your HTML file in a text editor</li>
+                    <li>Find: "let items = [" (around line 540)</li>
+                    <li>Replace the entire items array and nextId with the code above</li>
+                    <li>Save and upload to GitHub</li>
+                    <li>All users will see the updated prices!</li>
+                </ol>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="copyToClipboard(\`${code.replace(/`/g, '\\`')}\`)" style="flex: 1; padding: 10px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Copy to Clipboard</button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="flex: 1; padding: 10px; background: #e0e0e0; color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Close</button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Code copied to clipboard! Now paste it into your HTML file.');
+            }).catch(err => {
+                alert('Failed to copy. Please try again.');
+            });
+        }
+        
+        // Toggle items list visibility
+        let itemsListVisible = false; // Start as hidden
+        
+        function toggleItemsList() {
+            const itemsList = document.getElementById('itemsList');
+            const toggleBtn = document.getElementById('toggleItemsBtn');
+            
+            itemsListVisible = !itemsListVisible;
+            
+            if (itemsListVisible) {
+                itemsList.classList.remove('hidden');
+                toggleBtn.textContent = '👁️ Hide Items';
+            } else {
+                itemsList.classList.add('hidden');
+                toggleBtn.textContent = '👁️ Show Items';
+            }
+        }
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput').value;
+            const loginError = document.getElementById('loginError');
+            const loginOverlay = document.getElementById('loginOverlay');
+            const userStatusBar = document.getElementById('userStatusBar');
+            
+            if (passwordInput === APP_PASSWORD) {
+                // Password is correct
+                loginOverlay.classList.add('hidden');
+                sessionStorage.setItem('appUnlocked', 'true');
+                document.getElementById('passwordInput').value = '';
+                loginError.classList.remove('show');
+                userStatusBar.style.display = 'flex'; // Show user status bar
+            } else {
+                // Password is incorrect
+                loginError.classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        function signOut() {
+            // Confirm before sign out
+            if (confirm('Are you sure you want to sign out?')) {
+                sessionStorage.removeItem('appUnlocked');
+                document.getElementById('loginOverlay').classList.remove('hidden');
+                document.getElementById('userStatusBar').style.display = 'none';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                document.getElementById('loginError').classList.remove('show');
+            }
+        }
+        
+        // Check if already unlocked in this session
+        window.addEventListener('load', function() {
+            const userStatusBar = document.getElementById('userStatusBar');
+            if (!sessionStorage.getItem('appUnlocked')) {
+                document.getElementById('loginOverlay').classList.remove('hidden');
+                userStatusBar.style.display = 'none';
+                document.getElementById('passwordInput').focus();
+            } else {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                userStatusBar.style.display = 'flex'; // Show status bar if already unlocked
+            }
+        });
+        
         let items = [
             { id: 1, name: 'Dish for Salt', rentPerDay: 20, damageCost: 60 },
             { id: 2, name: 'Jugs', rentPerDay: 35, damageCost: 120 },
@@ -618,7 +1213,10 @@
                             Rent: ₹${parseFloat(item.rentPerDay).toFixed(2)}/day | Damage: ₹${parseFloat(item.damageCost).toFixed(2)}
                         </div>
                     </div>
-                    <button class="btn btn-delete" onclick="deleteItem(${item.id})">Delete</button>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn btn-edit" onclick="openEditModal(${item.id})">Edit</button>
+                        <button class="btn btn-delete" onclick="deleteItem(${item.id})">Delete</button>
+                    </div>
                 `;
                 list.appendChild(itemDiv);
                 
@@ -671,6 +1269,7 @@
             document.getElementById('rentPerDay').value = '';
             document.getElementById('damageCost').value = '';
             
+            saveItemsToStorage(); // Save to localStorage
             renderItems();
         }
         
@@ -681,8 +1280,65 @@
             if (select.value == id) {
                 select.value = '';
             }
+            saveItemsToStorage(); // Save to localStorage
             renderItems();
             updateSelection();
+        }
+        
+        // Edit item - Open modal
+        let editingItemId = null;
+        
+        function openEditModal(id) {
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+            
+            editingItemId = id;
+            document.getElementById('editItemName').value = item.name;
+            document.getElementById('editRentPerDay').value = item.rentPerDay;
+            document.getElementById('editDamageCost').value = item.damageCost;
+            
+            document.getElementById('editModal').classList.add('show');
+            document.getElementById('editItemName').focus();
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+            editingItemId = null;
+        }
+        
+        function saveEditItem() {
+            const name = document.getElementById('editItemName').value.trim();
+            const rent = parseFloat(document.getElementById('editRentPerDay').value);
+            const damage = parseFloat(document.getElementById('editDamageCost').value);
+            
+            if (!name) {
+                alert('Please enter an item name');
+                return;
+            }
+            
+            if (isNaN(rent) || rent < 0) {
+                alert('Please enter a valid rent amount');
+                return;
+            }
+            
+            if (isNaN(damage) || damage < 0) {
+                alert('Please enter a valid damage cost');
+                return;
+            }
+            
+            // Find and update the item
+            const itemIndex = items.findIndex(i => i.id === editingItemId);
+            if (itemIndex !== -1) {
+                items[itemIndex].name = name;
+                items[itemIndex].rentPerDay = rent;
+                items[itemIndex].damageCost = damage;
+            }
+            
+            saveItemsToStorage(); // Save to localStorage
+            closeEditModal();
+            renderItems();
+            updateSelection();
+            alert('Item updated successfully!');
         }
         
         // Update selection
@@ -762,6 +1418,8 @@
                 total: total
             });
             
+            saveCartToStorage(); // Save to localStorage
+            
             // Clear form
             document.getElementById('selectedItem').value = '';
             document.getElementById('quantityTaken').value = '';
@@ -773,6 +1431,7 @@
         // Remove from cart
         function removeFromCart(cartId) {
             cart = cart.filter(item => item.cartId !== cartId);
+            saveCartToStorage(); // Save to localStorage
             renderTable();
         }
         
@@ -856,6 +1515,7 @@
             if (confirm('Are you sure you want to clear the entire bill?')) {
                 cart = [];
                 cartNextId = 1;
+                saveCartToStorage(); // Save to localStorage
                 renderTable();
             }
         }
@@ -869,9 +1529,19 @@
             window.print();
         }
         
-        // Initialize
+        // Initialize - Load data from storage
+        loadItemsFromStorage(); // Load saved items
+        loadCartFromStorage();  // Load saved cart
         renderItems();
         renderTable();
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeEditModal();
+            }
+        });
     </script>
 </body>
 </html>

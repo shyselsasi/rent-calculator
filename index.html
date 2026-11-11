@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rent Calculator - INR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -196,6 +197,168 @@
         
         .toggle-btn.hidden {
             background: #999;
+        }
+        
+        /* Checkbox Styles */
+        .item-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+            vertical-align: middle;
+            accent-color: #667eea;
+            -webkit-appearance: checkbox;
+            appearance: checkbox;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        
+        .item-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .item-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .item-card.selected {
+            background: #e8f0ff !important;
+            border: 2px solid #667eea !important;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Select All Section */
+        .select-all-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .select-all-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .select-all-label input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #667eea;
+            cursor: pointer;
+            -webkit-appearance: checkbox;
+            appearance: checkbox;
+            flex-shrink: 0;
+        }
+        
+        .export-button-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .export-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .export-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .export-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .export-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            min-width: 200px;
+            margin-top: 5px;
+        }
+        
+        .export-dropdown.show {
+            display: block;
+        }
+        
+        .export-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .export-option:hover {
+            background: #f0f4ff;
+            color: #667eea;
+        }
+        
+        .export-option:first-child {
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .export-option:last-child {
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .items-price-list-heading {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
         }
         
         .item-card {
@@ -1014,7 +1177,7 @@
         function loadItemsFromStorage() {
             // Always load defaults - fresh start every time!
             items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
-            nextId = 12;
+            nextId = 13;
         }
         
         function saveCartToStorage() {
@@ -1162,19 +1325,21 @@
             { id: 2, name: 'Jugs', rentPerDay: 35, damageCost: 120 },
             { id: 3, name: 'Mile Markers', rentPerDay: 300, damageCost: 5000 },
             { id: 4, name: 'Plastic Buckets', rentPerDay: 30, damageCost: 100 },
-            { id: 5, name: 'Plastic cups', rentPerDay: 4, damageCost: 20 },
-            { id: 6, name: 'Traffic Battons', rentPerDay: 100, damageCost: 472 },
-            { id: 7, name: 'Traffic Cones', rentPerDay: 50, damageCost: 300 },
-            { id: 8, name: 'Traffic Cones (Large)', rentPerDay: 50, damageCost: 500 },
-            { id: 9, name: 'Traffic Jackets', rentPerDay: 35, damageCost: 95 },
-            { id: 10, name: 'Trays', rentPerDay: 30, damageCost: 160 },
-            { id: 11, name: 'Water Dispensers', rentPerDay: 30, damageCost: 150 }
+            { id: 5, name: 'Plastic cups(Green)', rentPerDay: 4, damageCost: 20 },
+            { id: 6, name: 'Plastic cups(Orange)', rentPerDay: 4, damageCost: 20 },
+            { id: 7, name: 'Traffic Battons', rentPerDay: 100, damageCost: 472 },
+            { id: 8, name: 'Traffic Cones(Small)', rentPerDay: 50, damageCost: 300 },
+            { id: 9, name: 'Traffic Cones (Large)', rentPerDay: 50, damageCost: 500 },
+            { id: 10, name: 'Traffic Jackets', rentPerDay: 35, damageCost: 95 },
+            { id: 11, name: 'Trays', rentPerDay: 30, damageCost: 160 },
+            { id: 12, name: 'Water Dispensers', rentPerDay: 30, damageCost: 150 }
         ];
         
         let items = [];
-        let nextId = 12;
+        let nextId = 13;
         let cart = [];
         let cartNextId = 1;
+        let selectedItems = []; // Track selected items for export
         
         // Clear errors
         function clearErrors() {
@@ -1197,19 +1362,30 @@
                 return;
             }
             
+            // Add heading
+            const headingDiv = document.createElement('div');
+            headingDiv.innerHTML = '<div class="items-price-list-heading">📋 ITEMS PRICE LIST</div>';
+            list.appendChild(headingDiv);
+            
+            // Add items with checkboxes
             items.forEach(item => {
-                // Add to list
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'item-card';
+                itemDiv.className = 'item-card' + (selectedItems.includes(item.id) ? ' selected' : '');
+                itemDiv.id = `item-card-${item.id}`;
                 itemDiv.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-details">
-                            Rent: ₹${parseFloat(item.rentPerDay).toFixed(2)}/day | Damage: ₹${parseFloat(item.damageCost).toFixed(2)}
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="item-checkbox" id="item-check-${item.id}" 
+                               ${selectedItems.includes(item.id) ? 'checked' : ''} 
+                               onchange="toggleItemSelection(${item.id})">
+                        <div class="item-info" style="flex: 1;">
+                            <div class="item-name" style="font-weight: 600; color: #333; margin-bottom: 5px;">${item.name}</div>
+                            <div class="item-details" style="color: #666; font-size: 13px;">
+                                Rent: ₹${parseFloat(item.rentPerDay).toFixed(2)}/day | Damage: ₹${parseFloat(item.damageCost).toFixed(2)}
+                            </div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-edit" onclick="openEditModal(${item.id})">Edit</button>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button class="btn btn-edit" onclick="openEditModal(${item.id})" style="padding: 6px 12px; font-size: 12px;">Edit</button>
                     </div>
                 `;
                 list.appendChild(itemDiv);
@@ -1220,6 +1396,214 @@
                 option.textContent = item.name;
                 select.appendChild(option);
             });
+            
+            // Add Select All and Export section
+            const selectAllDiv = document.createElement('div');
+            selectAllDiv.className = 'select-all-section';
+            const allSelected = selectedItems.length === items.length && selectedItems.length > 0;
+            selectAllDiv.innerHTML = `
+                <label class="select-all-label">
+                    <input type="checkbox" class="item-checkbox" id="selectAll" 
+                           ${allSelected ? 'checked' : ''} 
+                           onchange="toggleSelectAll()">
+                    <span>Select All ${selectedItems.length > 0 ? `(${selectedItems.length} selected)` : ''}</span>
+                </label>
+                <div class="export-button-group">
+                    <div class="export-dropdown-container">
+                        <button class="export-btn" onclick="toggleExportMenu()">
+                            📥 Export Price List <span>▼</span>
+                        </button>
+                        <div class="export-dropdown" id="exportDropdown">
+                            <button class="export-option" onclick="exportAsTXT()">
+                                📄 Download as TXT
+                            </button>
+                            <button class="export-option" onclick="exportAsPDF()">
+                                📕 Download as PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            list.appendChild(selectAllDiv);
+        }
+        
+        // Toggle individual item selection
+        function toggleItemSelection(itemId) {
+            const index = selectedItems.indexOf(itemId);
+            if (index > -1) {
+                selectedItems.splice(index, 1);
+            } else {
+                selectedItems.push(itemId);
+            }
+            renderItems();
+            updateSelectAllCheckbox();
+        }
+        
+        // Toggle select all
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            if (selectAllCheckbox.checked) {
+                selectedItems = items.map(item => item.id);
+            } else {
+                selectedItems = [];
+            }
+            renderItems();
+        }
+        
+        // Update select all checkbox based on selections
+        function updateSelectAllCheckbox() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = selectedItems.length === items.length && selectedItems.length > 0;
+            }
+        }
+        
+        // Toggle export dropdown menu
+        function toggleExportMenu() {
+            const dropdown = document.getElementById('exportDropdown');
+            dropdown.classList.toggle('show');
+        }
+        
+        // Close export menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const exportContainer = document.querySelector('.export-dropdown-container');
+            if (exportContainer && !exportContainer.contains(event.target)) {
+                const dropdown = document.getElementById('exportDropdown');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+        
+        // Export selected items as TXT
+        function exportAsTXT() {
+            if (selectedItems.length === 0) {
+                alert('Please select at least one item to export');
+                return;
+            }
+            
+            const selectedItemsList = items.filter(item => selectedItems.includes(item.id));
+            const date = new Date();
+            
+            let txtContent = 'ITEMS PRICE LIST\n\n';
+            
+            selectedItemsList.forEach((item, index) => {
+                txtContent += `${index + 1}. ${item.name}\n`;
+                txtContent += `   Rent per Day      : ${Math.round(parseFloat(item.rentPerDay))}\n`;
+                txtContent += `   Damage Cost       : ${Math.round(parseFloat(item.damageCost))}\n\n`;
+            });
+            
+            // Create blob and download
+            const blob = new Blob([txtContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `selected-items-${date.getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            // Close dropdown
+            document.getElementById('exportDropdown').classList.remove('show');
+            alert(`✅ Exported ${selectedItemsList.length} items as TXT`);
+        }
+        
+        // Export selected items as PDF (Table Format)
+        function exportAsPDF() {
+            if (selectedItems.length === 0) {
+                alert('Please select at least one item to export');
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const selectedItemsList = items.filter(item => selectedItems.includes(item.id));
+            const date = new Date();
+            
+            let yPosition = 15;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 15;
+            const contentWidth = pageWidth - (2 * margin);
+            
+            // Title
+            doc.setFontSize(14);
+            doc.setTextColor(51, 51, 51);
+            doc.setFont(undefined, 'bold');
+            doc.text('ITEMS PRICE LIST', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 12;
+            
+            // Table dimensions
+            const colWidths = {
+                no: 15,
+                name: 80,
+                rent: 35,
+                damage: 35
+            };
+            
+            const tableStartX = margin;
+            const tableStartY = yPosition;
+            
+            // Draw table header
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(255, 255, 255);
+            doc.setFillColor(102, 126, 234);
+            
+            // Header background
+            doc.rect(tableStartX, tableStartY, contentWidth, 8, 'F');
+            
+            // Header text
+            doc.text('NO.', tableStartX + 3, tableStartY + 6);
+            doc.text('ITEM NAME', tableStartX + colWidths.no + 3, tableStartY + 6);
+            doc.text('RENT/DAY', tableStartX + colWidths.no + colWidths.name + 3, tableStartY + 6);
+            doc.text('DAMAGE COST', tableStartX + colWidths.no + colWidths.name + colWidths.rent + 3, tableStartY + 6);
+            
+            yPosition += 10;
+            
+            // Draw table rows
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(51, 51, 51);
+            doc.setFontSize(9);
+            
+            selectedItemsList.forEach((item, index) => {
+                // Check if we need new page
+                if (yPosition > pageHeight - 20) {
+                    doc.addPage();
+                    yPosition = 15;
+                }
+                
+                // Alternate row colors
+                if (index % 2 === 0) {
+                    doc.setFillColor(245, 245, 245);
+                    doc.rect(tableStartX, yPosition, contentWidth, 8, 'F');
+                }
+                
+                // Row borders
+                doc.setDrawColor(200, 200, 200);
+                doc.line(tableStartX, yPosition, tableStartX + contentWidth, yPosition);
+                
+                // Row data
+                doc.text((index + 1).toString(), tableStartX + 3, yPosition + 6);
+                doc.text(item.name, tableStartX + colWidths.no + 3, yPosition + 6);
+                doc.text(Math.round(parseFloat(item.rentPerDay)).toString(), tableStartX + colWidths.no + colWidths.name + 3, yPosition + 6);
+                doc.text(Math.round(parseFloat(item.damageCost)).toString(), tableStartX + colWidths.no + colWidths.name + colWidths.rent + 3, yPosition + 6);
+                
+                yPosition += 8;
+            });
+            
+            // Draw bottom border
+            doc.setDrawColor(200, 200, 200);
+            doc.line(tableStartX, yPosition, tableStartX + contentWidth, yPosition);
+            
+            // Save PDF
+            doc.save(`selected-items-${date.getTime()}.pdf`);
+            
+            // Close dropdown
+            document.getElementById('exportDropdown').classList.remove('show');
+            alert(`✅ Exported ${selectedItemsList.length} items as PDF`);
         }
         
         // Add item

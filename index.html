@@ -361,6 +361,201 @@
             border-bottom: 2px solid #667eea;
         }
         
+        /* Extra Charges Styles */
+        .extra-charges-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .extra-charges-heading {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .charges-list {
+            margin-bottom: 15px;
+        }
+        
+        .charge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .charge-item:last-child {
+            border-bottom: none;
+        }
+        
+        .charge-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+        
+        .charge-name {
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+        
+        .charge-amount {
+            color: #333;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: right;
+        }
+        
+        .charge-delete-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .charge-delete-btn:hover {
+            background: #d94520;
+            transform: scale(1.05);
+        }
+        
+        #chargesListContainer {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+        }
+        
+        #chargesListContainer p {
+            color: #999;
+            font-size: 13px;
+            margin: 0;
+        }
+        
+        #chargesListContainer .charge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #ffa500;
+        }
+        
+        #chargesListContainer .charge-info {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            align-items: center;
+        }
+        
+        #chargesListContainer .charge-name {
+            font-weight: 500;
+            color: #333;
+            min-width: 150px;
+        }
+        
+        #chargesListContainer .charge-amount {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        
+        .add-charge-form {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .charge-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .charge-input-group input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .charge-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .charge-add-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .charge-add-btn:hover {
+            background: #5568d3;
+        }
+        
+        .charge-cancel-btn {
+            background: #ccc;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        
+        .charge-cancel-btn:hover {
+            background: #aaa;
+        }
+        
+        .add-charge-btn {
+            background: #ffa500;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .add-charge-btn:hover {
+            background: #ff8c00;
+            transform: translateY(-2px);
+        }
+        
+        .charges-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 2px solid #ddd;
+            font-weight: 600;
+            color: #333;
+            margin-top: 10px;
+        }
+        
         .item-card {
             background: #f8f9fa;
             border-left: 4px solid #667eea;
@@ -1002,6 +1197,11 @@
             .btn-edit {
                 display: none !important;
             }
+            
+            /* Hide management section from print */
+            #managementChargesSection {
+                display: none !important;
+            }
         }
         
         .config-section {
@@ -1117,8 +1317,13 @@
                 <h2>📋 Calculate Rent</h2>
                 
                 <div class="form-group">
-                    <label for="billTo">Bill To (Customer Name)</label>
-                    <input type="text" id="billTo" placeholder="Enter customer name">
+                    <label for="customerName">Customer/Organization Name</label>
+                    <input type="text" id="customerName" placeholder="Customer Name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="billingAddress">Billing Address (Optional)</label>
+                    <textarea id="billingAddress" placeholder="Enter address..." rows="4" style="font-family: inherit; resize: vertical; padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 100%;"></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -1156,6 +1361,24 @@
         <!-- Selected Items Table Section -->
         <div class="card">
             <h2>📊 Bill Summary</h2>
+            
+            <!-- Extra Charges Management -->
+            <div id="managementChargesSection" class="extra-charges-section" style="margin-bottom: 20px;">
+                <div class="extra-charges-heading">➕ MANAGE EXTRA CHARGES</div>
+                <div id="chargesListContainer" class="charges-list"></div>
+                <div class="add-charge-form" id="addChargeForm" style="display: none;">
+                    <div class="charge-input-group">
+                        <input type="text" id="chargeName" placeholder="Charge Name (e.g., Cleaning, Loading, Delivery)" />
+                        <input type="number" id="chargeAmount" placeholder="Amount" step="1" />
+                    </div>
+                    <div class="charge-buttons">
+                        <button class="charge-add-btn" onclick="addExtraCharge()">Add Charge</button>
+                        <button class="charge-cancel-btn" onclick="cancelAddCharge()">Cancel</button>
+                    </div>
+                </div>
+                <button class="add-charge-btn" id="toggleAddChargeBtn" onclick="toggleAddChargeForm()">+ Add Charge</button>
+            </div>
+            
             <div id="tableSection"></div>
         </div>
         
@@ -1340,6 +1563,8 @@
         let cart = [];
         let cartNextId = 1;
         let selectedItems = []; // Track selected items for export
+        let extraCharges = []; // Track extra charges
+        let chargeNextId = 1;
         
         // Clear errors
         function clearErrors() {
@@ -1483,7 +1708,9 @@
             }
             
             const selectedItemsList = items.filter(item => selectedItems.includes(item.id));
-            const date = new Date();
+            
+            // Static filename: SolesOfCochin_RentalCatalog
+            const fileName = 'SolesOfCochin_RentalCatalog.txt';
             
             let txtContent = 'ITEMS PRICE LIST\n\n';
             
@@ -1498,7 +1725,7 @@
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `selected-items-${date.getTime()}.txt`;
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -1520,7 +1747,9 @@
             const doc = new jsPDF();
             
             const selectedItemsList = items.filter(item => selectedItems.includes(item.id));
-            const date = new Date();
+            
+            // Static filename: SolesOfCochin_RentalCatalog
+            const pdfFileName = 'SolesOfCochin_RentalCatalog.pdf';
             
             let yPosition = 15;
             const pageWidth = doc.internal.pageSize.getWidth();
@@ -1599,7 +1828,7 @@
             doc.line(tableStartX, yPosition, tableStartX + contentWidth, yPosition);
             
             // Save PDF
-            doc.save(`selected-items-${date.getTime()}.pdf`);
+            doc.save(pdfFileName);
             
             // Close dropdown
             document.getElementById('exportDropdown').classList.remove('show');
@@ -1822,15 +2051,26 @@
                 return;
             }
             
-            const billDate = new Date().toLocaleDateString('en-IN');
-            const billTime = new Date().toLocaleTimeString('en-IN');
-            const billNumber = 'BILL-' + Date.now();
-            const billTo = document.getElementById('billTo').value.trim() || 'Customer';
+            const now = new Date();
+            const billDate = now.toLocaleDateString('en-IN');
+            const billTime = now.toLocaleTimeString('en-IN');
+            
+            // Generate compact bill number: BILL-YYYYMMDD-HHMM
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            const billNumber = `BILL-${year}${month}${day}-${hour}${minute}`;
+            
+            const customerName = document.getElementById('customerName').value.trim() || 'Customer';
+            const billingAddress = document.getElementById('billingAddress').value.trim() || '';
             
             let html = `
                 <div style="margin-bottom: 25px; border-bottom: 2px solid #667eea; padding-bottom: 15px;">
                     <h3 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">RENTAL BILL</h3>
-                    <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Bill To:</strong> ${billTo}</p>
+                    <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Bill To:</strong> ${customerName}</p>
+                    ${billingAddress ? `<p style="margin: 5px 0; color: #666; font-size: 13px; white-space: pre-wrap;"><strong>Address:</strong> ${billingAddress}</p>` : ''}
                     <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Bill No:</strong> ${billNumber}</p>
                     <p style="margin: 5px 0; color: #666; font-size: 13px;"><strong>Date:</strong> ${billDate} | <strong>Time:</strong> ${billTime}</p>
                 </div>
@@ -1873,10 +2113,52 @@
             html += `
                     </tbody>
                 </table>
+                <div style="padding: 15px 0; text-align: right;">
+                    <p style="margin: 0; color: #666; font-size: 13px;">
+                        <strong>Items Subtotal:</strong> <span style="font-weight: 600; color: #333;">₹ ${grandTotal.toFixed(2)}</span>
+                    </p>
+                </div>
+            `;
+            
+            // Add extra charges section only if charges exist
+            let totalCharges = 0;
+            if (extraCharges.length > 0) {
+                totalCharges = extraCharges.reduce((sum, charge) => sum + parseFloat(charge.amount), 0);
+                html += `
+                    <div class="extra-charges-section">
+                        <div class="extra-charges-heading">Extra Charges:</div>
+                        <div class="charges-list">
+                `;
+                
+                extraCharges.forEach(charge => {
+                    html += `
+                        <div class="charge-item">
+                            <div class="charge-info">
+                                <div class="charge-name">${charge.name}</div>
+                                <div class="charge-amount">₹ ${parseFloat(charge.amount).toFixed(2)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                        <div class="charges-total">
+                            <span style="font-weight: 600;">Total Extra Charges:</span>
+                            <span style="font-weight: 600;">₹ ${totalCharges.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Calculate grand total with charges
+            const finalGrandTotal = grandTotal + totalCharges;
+            
+            html += `
                 <div class="result-section">
                     <div class="result-row">
                         <span class="result-label">Grand Total</span>
-                        <span class="result-value"><span class="currency-symbol">₹</span>${grandTotal.toFixed(2)}</span>
+                        <span class="result-value"><span class="currency-symbol">₹</span>${finalGrandTotal.toFixed(2)}</span>
                     </div>
                 </div>
                 <div class="bill-actions">
@@ -1886,6 +2168,96 @@
             `;
             
             tableSection.innerHTML = html;
+            renderChargesListUI();
+        }
+        
+        // Render charges list UI
+        function renderChargesListUI() {
+            const container = document.getElementById('chargesListContainer');
+            
+            if (extraCharges.length === 0) {
+                container.innerHTML = '<p style="color: #999; font-size: 13px;">No extra charges added</p>';
+                return;
+            }
+            
+            let html = '';
+            extraCharges.forEach(charge => {
+                html += `
+                    <div class="charge-item">
+                        <div class="charge-info">
+                            <div class="charge-name">${charge.name}</div>
+                            <div class="charge-amount">₹ ${parseFloat(charge.amount).toFixed(2)}</div>
+                        </div>
+                        <button class="charge-delete-btn" onclick="deleteExtraCharge(${charge.id})">✕ Delete</button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Toggle add charge form
+        function toggleAddChargeForm() {
+            const form = document.getElementById('addChargeForm');
+            const btn = document.getElementById('toggleAddChargeBtn');
+            
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+                btn.style.display = 'none';
+                document.getElementById('chargeName').focus();
+            } else {
+                form.style.display = 'none';
+                btn.style.display = 'block';
+            }
+        }
+        
+        // Add extra charge
+        function addExtraCharge() {
+            const name = document.getElementById('chargeName').value.trim();
+            const amount = document.getElementById('chargeAmount').value.trim();
+            
+            if (!name) {
+                alert('Please enter charge name');
+                return;
+            }
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                alert('Please enter valid amount');
+                return;
+            }
+            
+            extraCharges.push({
+                id: chargeNextId++,
+                name: name,
+                amount: parseFloat(amount)
+            });
+            
+            // Clear inputs
+            document.getElementById('chargeName').value = '';
+            document.getElementById('chargeAmount').value = '';
+            
+            // Hide form and show button
+            document.getElementById('addChargeForm').style.display = 'none';
+            document.getElementById('toggleAddChargeBtn').style.display = 'block';
+            
+            // Update UI
+            renderChargesListUI();
+            renderTable();
+        }
+        
+        // Cancel adding charge
+        function cancelAddCharge() {
+            document.getElementById('addChargeForm').style.display = 'none';
+            document.getElementById('toggleAddChargeBtn').style.display = 'block';
+            document.getElementById('chargeName').value = '';
+            document.getElementById('chargeAmount').value = '';
+        }
+        
+        // Delete extra charge
+        function deleteExtraCharge(chargeId) {
+            extraCharges = extraCharges.filter(charge => charge.id !== chargeId);
+            renderChargesListUI();
+            renderTable();
         }
         
         // Reset bill
